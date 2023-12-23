@@ -16,6 +16,9 @@ import matplotlib
 import matplotlib.pyplot as plt
 import seaborn as sns
 from folium.plugins import HeatMap
+from sklearn.model_selection import train_test_split
+from sklearn.neighbors import KNeighborsClassifier
+from sklearn.metrics import accuracy_score
 
 accident = pd.read_csv('C:\\Users\\fanti\\OneDrive\\Documents\\M2\\data viz\\accident.csv')
 
