@@ -105,7 +105,7 @@ if option_affichage == 'Général':
     
     #Alterner accident et gravité
     with st.expander("Commentaire"):
-        st.markdown(f"<b>Description</b>: La cartographie principale permet de constater le nombre d'accidents enregistrés dans la base BAAC par département. La deuxième carte permet de visualiser la localisation des accidents ayant eu lieu dans la commune n°{st.sidebar.var_com}. <br> <b>Analyse: Les accidents ont lieu en majorité sur des grands axes: Boulevard Magenta et Rue de Lafayette dans le 10ème,Voltaire 11ème ou Quai de Bercy et Périphèrique dans le 12ème. L'apport de cette zone de périphérique va être intéressante, le 10ème et 11ème on plus de zones piétonnes limités à 30 par exemple</b> ", unsafe_allow_html=True)
+        st.markdown(f"<b>Description</b>: La cartographie principale permet de constater le nombre d'accidents enregistrés dans la base BAAC par département. La deuxième carte permet de visualiser la localisation des accidents ayant eu lieu dans la commune n°{st.sidebar.var_com}. <br> <b>Analyse: Les accidents ont lieu en majorité sur des grands axes: Boulevard Magenta et Rue de Lafayette dans le 10ème,Voltaire 11ème ou Quai de Bercy et Périphérique dans le 12ème. L'apport de cette zone de périphérique limité à 70 km/h va être intéressante par rapport aux 10ème et 11ème  qui on plus de zones limités à 30km/h par exemple. En regardant la France entière, on a plus d'accidents au 2ème semestre de l'année (ne pas oublier l'effet confinement en début 2021),à 75% avec une météo normale. On a plus d'accidents dans les grandes agglomérations, mais la gravité est plus forte dans des départements plus ruraux </b> ", unsafe_allow_html=True)
     
     col1, col2 = st.columns([1, 8])
     
@@ -148,7 +148,7 @@ elif option_affichage == 'Véhicule':
         loc3 = st.text_input("Entrez un commune ou un département:", value = '75112')
         st.plotly_chart(tb.plot_accidents_by_type_veh(loc3), use_container_width=True)
     with col2:
-        st.markdown(f"<b>Description</b>:Regardons les accidents ont lieu avec des obstacles fixes ou mobiles et les types de véhicules impliqués </b> <br> <b>Analyse: Pour le 10ème et 11 ème , on a à 70% des obstacles mobiles qui sont des véhicules(types 2)  et 85% dans le 12ème (effet périf?), le reste est principalement des piétons (type 1). Pour les obstacles fixes, c'est beaucoup plus dispersés avec une majorité de piéton 40% dans le 11 et 12 et 25% dans le 10ème,le type d'obstacle est beaucoup plus disparate dans cet arrondissment, surement car il est plus dense, avec zones à risques. Concernant le type de véhicule, on a en grande majorité du 7, puis du 1 et 10  </b> ", unsafe_allow_html=True)
+        st.markdown(f"<b>Description</b>:Regardons les accidents selon le type d'obstable et les types de véhicules impliqués </b> <br> <b>Analyse: Pour le 10ème et 11 ème , on a à 70% des obstacles mobiles qui sont des véhicules(types 2)  et 85% dans le 12ème (effet périférique?), le reste est principalement des piétons (type 1). Pour les obstacles fixes, c'est beaucoup plus dispersé avec une majorité de piéton 40% dans le 11 et 12 et 25% dans le 10ème,le type d'obstacle est beaucoup plus disparate dans cet arrondissment, surement car il est plus dense, avec zones à risques. Concernant le type de véhicule, on a en grande majorité du 7, puis du 1 et 10  </b> ", unsafe_allow_html=True)
         
         
         
@@ -162,9 +162,19 @@ elif option_affichage == 'Lieux':
         loc3 = st.text_input("Entrez un commune ou un département:", value = '75112')
         st.plotly_chart(tb.plot_accidents_by_vitesse(loc3), use_container_width=True)
     with col2:
-        st.markdown(f"<b>Description</b>:Cette Parie s'intéresse aux accidents par rapport à l'état de la route et aux vitesses autorisés </b> <br> <b>Analyse:On remarque que dans le 12ème, le type de route 1 à moins d'accidents, le 10 ème et 11ème n'ont que du type 4. On a nettement plus d'accidents partout sur la surface 1. Pour la vitesse, dans le 11ème et 10 ème il y a des zones à 30km avec beaucoup de traffic de piétons. on remarque que les zones 30 ont plus d'accidents que les 50. Pour le 12ème, avec le périphérique à 70, on ne voit pas forcément beacoup plus de sinistres qu'aux zones 30, sûrement dans le bois de Vincennes, peut être un non respect des limites de vitesse.   </b> ", unsafe_allow_html=True)
+        st.markdown(f"<b>Description</b>:Cette Partie s'intéresse aux accidents par rapport à l'état de la route et aux vitesses autorisés </b> <br> <b>Analyse:On remarque que dans le 12ème, le type de route 1 à moins d'accidents, le 10 ème et 11ème n'ont que du type 4. On a nettement plus d'accidents partout sur la surface 1. Pour la vitesse, dans le 11ème et 10 ème il y a des zones à 30km avec beaucoup de traffic de piétons. On remarque que les zones 30 ont plus d'accidents que les 50. Pour le 12ème, avec le périphérique à 70, on ne voit pas forcément beacoup plus de sinistres qu'aux zones 30, sûrement dans le bois de Vincennes, peut être un non-respect des limites de vitesse.   </b> ", unsafe_allow_html=True)
 elif option_affichage == 'Machine Learning':  
-    st.write("Prédiction KNN à partir de l'année de naissance , de la vitesse autorisée, de la gravité et du sexe")  
+    st.write("Prédiction KNN à partir de l'année de naissance , de la vitesse autorisée, de la gravité et du sexe")
+#streamlit run c:\users\hugo.razafindralambo\.spyder-py3\dashboard_baac.py
 
+# Résumé du streamlit:
+# 2 pages: Cartographie et données départementales.
+# Page Cartographie:
+    # Visualisation géographique: On peut voir nb d'accident par département ou gravité (ou par commune mais bug).
+    # Visualisation temporelle: On peut voir la distribution des accidents par jour ou mois.
+# Page Graphiques sur les données départementales:
+    # On peut voir la distribution de chaque variable par département choisi.
+    # Rajouter graphique circulaire ?
 
-#streamlit run C:\Users\fanti\OneDrive\Documents\Actuariat\M2\data viz\dashboard_baacFantin.py
+# Rajouter textes 
+
