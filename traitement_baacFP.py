@@ -12,7 +12,6 @@ import folium as folium
 import numpy as np
 import math
 from shapely.geometry import Point, LineString
-import matplotlib
 import matplotlib.pyplot as plt
 import seaborn as sns
 from folium.plugins import HeatMap
