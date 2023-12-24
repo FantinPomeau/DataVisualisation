@@ -75,6 +75,34 @@ freq_grav_mp = (somme_ponderee / total_accidents).reset_index(name='moyenne_pond
 accident_grav = freq_grav_mp.merge(cntr_dep, how="left", on="dep")
 accident_grav = gpd.GeoDataFrame(accident_grav, geometry="geometry_dep")
 
+
+#ML 
+dataMLclass2=accident[accident['obst_fixe']!='IRLVT']
+dataMLclass1=accident[accident['obst_mobile']!='IRLVT']
+data1=dataMLclass1[['obst_mobile','vitesse_autorisee','sexe','an_nais','grav']]
+data2=dataMLclass2[['obst_fixe', 'vitesse_autorisee','sexe','an_nais','grav']]
+df3 = pd.concat([data1,data2], ignore_index=True)
+df3['obst_mobile'].fillna(0, inplace=True)
+df3['obst_fixe'].fillna(0,inplace=True)
+df3['obst_mobile']=df3['obst_mobile'].astype(int)
+df3['obst_fixe']=df3['obst_fixe'].astype(int)
+df3['obst_mobile']=np.where(df3['obst_mobile']>0,2,df3['obst_mobile'])
+df3['obst_fixe']=np.where(df3['obst_fixe']>0,1,df3['obst_fixe'])
+to_drop=['obst_mobile','obst_fixe']
+df3['type_obst']=df3[['obst_mobile','obst_fixe']].max(axis=1)
+df3=df3.drop(to_drop,axis=1)
+df3['type_obst']=np.where(df3['type_obst']==2,1,0)
+df3.sexe = df3.sexe.apply(lambda x : x.replace("homme","1"))
+df3.sexe = df3.sexe.apply(lambda x : x.replace("femme","2"))
+df3["sexe"]=df3["sexe"].astype('int')
+print(df3)
+#1: mobile 0: fixe 
+
+x = df3.drop('type_obst', axis='columns')  # X contient les caractéristiques
+y = df3['type_obst']  # y contient la variable cible
+print(len(x))
+X_train, X_test, y_train, y_test = train_test_split(x, y, test_size=0.2, random_state=42)
+print(X_train)
 #Cartographie:
     
 def map_accident(column, com=None):
@@ -618,5 +646,17 @@ def plot_accidents_by_vitesse(loc):
     )
 
     return fig
-def predictionKNN(loc):
-    return(0)
+def predictionKNN(k,sexe,année_naissance,gravité,vitesse):
+    # Classement par K-NN
+
+    knn = KNeighborsClassifier(n_neighbors=k)
+    knn.fit(X_train, X_train)
+    y_pred = knn.predict(X_test)
+
+    # Prédiction de la classe pour les caractéristiques données
+    prediction = knn.predict([[sexe, année_naissance, gravité, vitesse]])
+
+    # Calcul de la précision du modèle
+    accuracy = accuracy_score(y_test, knn.predict(X_test))
+
+    return accuracy,prediction
