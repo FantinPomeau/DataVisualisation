@@ -20,7 +20,7 @@ from sklearn.model_selection import train_test_split
 from sklearn.neighbors import KNeighborsClassifier
 from sklearn.metrics import accuracy_score
 
-accident = pd.read_csv(r"C:\Users\fanti\M2\data viz\accident.csv")
+accident = pd.read_csv('C:\Users\fanti\M2\data viz\accident.csv')
 
 accident = accident[accident['an']==2021]
 accident = accident.drop_duplicates()
@@ -42,10 +42,10 @@ accident['grav'].replace({"1": 1, "2": 4, "3": 3, "4": 2}, inplace=True)
 list_om = ['971','972','974','976', '973', '986','988', '978', '975', '977','987']
 accident_metr = accident[~accident['dep'].isin(list_om)]
 
-cntr_dep = gpd.read_file(r"C:\Users\fanti\M2\data viz\departements.geojson")
+cntr_dep = gpd.read_file('C:\Users\fanti\M2\data viz\departements.geojson')
 cntr_dep.rename(columns = {"code" : "dep", "nom":"Nom_dep","geometry":"geometry_dep"}, inplace = True)
 
-cntr_com_2021 = gpd.read_file(r"C:\Users\fanti\M2\data viz\commune-frmetdrom-2021\commune-frmetdrom-2021\COMMUNE_FRMETDROM.shp")
+cntr_com_2021 = gpd.read_file('C:\Users\fanti\M2\data viz\commune-frmetdrom-2021\commune-frmetdrom-2021\COMMUNE_FRMETDROM.shp')
 cntr_com_2021.rename(columns = {"INSEE_COM" : "com", "NOM":"Nom_com","geometry":"geometry_com"}, inplace = True)
 
 #Nombre d'accidents par département
