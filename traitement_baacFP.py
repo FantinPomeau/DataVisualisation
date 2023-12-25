@@ -18,8 +18,7 @@ from folium.plugins import HeatMap
 from sklearn.model_selection import train_test_split
 from sklearn.neighbors import KNeighborsClassifier
 from sklearn.metrics import accuracy_score
-filepath1='C:/Users/fanti/M2/data viz/accident.csv'
-accident = pd.read_csv(filepath1)
+accident = pd.read_csv('C:/Users/fanti/M2/data viz/accident.csv')
 
 accident = accident[accident['an']==2021]
 accident = accident.drop_duplicates()
@@ -41,11 +40,10 @@ accident['grav'].replace({"1": 1, "2": 4, "3": 3, "4": 2}, inplace=True)
 list_om = ['971','972','974','976', '973', '986','988', '978', '975', '977','987']
 accident_metr = accident[~accident['dep'].isin(list_om)]
 
-filepath2='C:/Users/fanti/M2/data viz/departements.geojson'
-cntr_dep = gpd.read_file(filepath2)
+cntr_dep = gpd.read_file('C:/Users/fanti/M2/data viz/departements.geojson')
 cntr_dep.rename(columns = {"code" : "dep", "nom":"Nom_dep","geometry":"geometry_dep"}, inplace = True)
-filepath3='C:/Users/fanti/M2/data viz/commune-frmetdrom-2021/commune-frmetdrom-2021/COMMUNE_FRMETDROM.shp'
-cntr_com_2021 = gpd.read_file(filepath3)
+
+cntr_com_2021 = gpd.read_file('C:/Users/fanti/M2/data viz/commune-frmetdrom-2021/commune-frmetdrom-2021/COMMUNE_FRMETDROM.shp')
 cntr_com_2021.rename(columns = {"INSEE_COM" : "com", "NOM":"Nom_com","geometry":"geometry_com"}, inplace = True)
 
 #Nombre d'accidents par département
@@ -646,17 +644,16 @@ def plot_accidents_by_vitesse(loc):
     )
 
     return fig
-def predictionKNN(k,sexe,année_naissance,gravité,vitesse):
+def predictionKNN(k, sexe, année_naissance, gravité, vitesse):
     # Classement par K-NN
-
     knn = KNeighborsClassifier(n_neighbors=k)
-    knn.fit(X_train, X_train)
+    knn.fit(X_train, y_train) # Correction here
     y_pred = knn.predict(X_test)
 
     # Prédiction de la classe pour les caractéristiques données
-    prediction = knn.predict([[sexe, année_naissance, gravité, vitesse]])
+    prediction = knn.predict([[sexe, année_naissance, gravité, vitesse]]) # Correction here
 
     # Calcul de la précision du modèle
     accuracy = accuracy_score(y_test, knn.predict(X_test))
 
-    return accuracy,prediction
+    return accuracy, prediction, y_pred

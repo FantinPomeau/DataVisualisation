@@ -165,23 +165,23 @@ elif option_affichage == 'Lieux':
     with col2:
         st.markdown(f"<b>Description</b>:Cette Partie s'intéresse aux accidents par rapport à l'état de la route et aux vitesses autorisés </b> <br> <b>Analyse:On remarque que dans le 12ème, le type de route 1 à moins d'accidents, le 10 ème et 11ème n'ont que du type 4. On a nettement plus d'accidents partout sur la surface 1. Pour la vitesse, dans le 11ème et 10 ème il y a des zones à 30km avec beaucoup de traffic de piétons. On remarque que les zones 30 ont plus d'accidents que les 50. Pour le 12ème, avec le périphérique à 70, on ne voit pas forcément beacoup plus de sinistres qu'aux zones 30, sûrement dans le bois de Vincennes, peut être un non-respect des limites de vitesse.   </b> ", unsafe_allow_html=True)
 elif option_affichage == 'Machine Learning':  
-    st.write("Prédiction KNN à partir de l'année de naissance , de la vitesse autorisée, de la gravité et du sexe")
+    st.write("Prédiction KNN à partir de l'année de naissance , de la vitesse autorisée, de la gravité et du sexe: le type d'obstacle rencontré, 1 pour mobile ,0 pour fixe")
     k = int(st.slider("Choisissez le nombre de voisins (k)", 1, 15, 3))
     vitesse = int(st.slider("vitesse autorisée", 30,110,50))
     sexe = int(st.slider("sexe", 1,2))
     année_naissance = int(st.slider("année de naissance", 1940, 2023, 1980))
     gravité = int(st.slider("gravité", 1, 4, 2))
-    accuracy,prediction=tb.predictionKNN(k,sexe,année_naissance,gravité,vitesse)
+    accuracy,prediction,y_pred=tb.predictionKNN(k,sexe,année_naissance,gravité,vitesse)
     st.write(f"Précision du modèle : {accuracy:.2f}")
     st.write(f"La classe prédite est : {prediction[0]}")
     # Création d'un graphique de dispersion (scatter plot)
     
     fig, ax = plt.subplots()
-    ax.scatter(tb.X_test.iloc[:, 0].values, tb.X_test.iloc[:, 3].values, c=tb.y_pred, cmap='viridis', marker='o', edgecolor='k')
-
+    ax.scatter(tb.X_test.iloc[:, 0].values, tb.X_test.iloc[:, 3].values, c=y_pred, cmap='viridis', marker='o', edgecolor='k')
+    scatter=ax.scatter(tb.X_test.iloc[:, 0].values, tb.X_test.iloc[:, 3].values, c=y_pred, cmap='viridis', marker='o', edgecolor='k')
     # Légende du graphique
-    legend = ax.legend(*plt.scatter.legend_elements(), title="Classes")
-    ax.add_artist(legend)
+    handles, labels = scatter.legend_elements()
+    ax.legend(handles, labels, title="Classes")
 
     # Axes du graphique
     ax.set_xlabel('vitesse')
@@ -202,4 +202,5 @@ elif option_affichage == 'Machine Learning':
     # Rajouter graphique circulaire ?
 
 # Rajouter textes 
+
 
