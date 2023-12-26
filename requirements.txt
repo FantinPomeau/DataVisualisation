@@ -12,3 +12,4 @@ seaborn==0.11.1
 Shapely==2.0.2
 streamlit==1.27.2
 streamlit_folium==0.17.4
+gdown==4.7.1
