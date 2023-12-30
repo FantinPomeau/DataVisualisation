@@ -26,7 +26,6 @@ output = 'accident.csv'
 gdown.download(url, output, quiet=False)
 
 accident = pd.read_csv(output)
-<<<<<<< HEAD
 url2 ="https://drive.google.com/file/d/1mWkKtRoprKcWbNsmll2E6wzclIdg2d1I/view?usp=drive_link"
 output2 = 'departements.geojson'
 gdown.download(url2, output2, quiet=False)
@@ -35,9 +34,6 @@ url3 ="https://drive.google.com/file/d/1LxP-fgf29c5ji3i1a_L_HLrJHbY5FP1x/view?us
 output3 = 'COMMUNE_FRMETDROM.shp'
 gdown.download(url3, output3, quiet=False)
 cntr_com_2021 = gpd.read_file(output3)
-=======
-
->>>>>>> 92d34bbbf889d2b14bdd3b1a7239647e8a713a13
 
 accident = accident[accident['an']==2021]
 accident = accident.drop_duplicates()
@@ -58,16 +54,8 @@ accident['grav'].replace({"1": 1, "2": 4, "3": 3, "4": 2}, inplace=True)
 
 list_om = ['971','972','974','976', '973', '986','988', '978', '975', '977','987']
 accident_metr = accident[~accident['dep'].isin(list_om)]
-url2 ="https://drive.google.com/file/d/1mWkKtRoprKcWbNsmll2E6wzclIdg2d1I/view?usp=drive_link"
-output2 = 'departements.geojson'
-gdown.download(url2, output2, quiet=False)
 
 
-<<<<<<< HEAD
-cntr_dep.rename(columns = {"code" : "dep", "nom":"Nom_dep","geometry":"geometry_dep"}, inplace = True)
-
-
-=======
 cntr_dep = gpd.read_file(output2)
 cntr_dep.rename(columns = {"code" : "dep", "nom":"Nom_dep","geometry":"geometry_dep"}, inplace = True)
 
@@ -75,7 +63,6 @@ url3 ="https://drive.google.com/file/d/1LxP-fgf29c5ji3i1a_L_HLrJHbY5FP1x/view?us
 output3 = 'COMMUNE_FRMETDROM.shp'
 gdown.download(url3, output3, quiet=False)
 cntr_com_2021 = gpd.read_file(output3)
->>>>>>> 92d34bbbf889d2b14bdd3b1a7239647e8a713a13
 cntr_com_2021.rename(columns = {"INSEE_COM" : "com", "NOM":"Nom_com","geometry":"geometry_com"}, inplace = True)
 
 #Nombre d'accidents par département
