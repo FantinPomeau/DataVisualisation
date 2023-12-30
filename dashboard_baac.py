@@ -279,3 +279,5 @@ elif option_affichage == 'Machine Learning':
 
     # Affichage du graphique dans Streamlit
     st.pyplot(fig)
+    
+#streamlit run c:\users\hugo.razafindralambo\.spyder-py3\dashboard_baac.py

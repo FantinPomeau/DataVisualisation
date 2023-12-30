@@ -20,20 +20,7 @@ from sklearn.neighbors import KNeighborsClassifier
 from sklearn.metrics import accuracy_score
 import gdown
 
-
-url ="https://drive.google.com/file/d/1fk_yMR-SmkdgYbpQidO5b0uPxm1GCaDU/view?usp=drive_link"
-output = 'accident.csv'
-gdown.download(url, output, quiet=False)
-
-accident = pd.read_csv(output)
-url2 ="https://drive.google.com/file/d/1mWkKtRoprKcWbNsmll2E6wzclIdg2d1I/view?usp=drive_link"
-output2 = 'departements.geojson'
-gdown.download(url2, output2, quiet=False)
-cntr_dep = gpd.read_file(output2)
-url3 ="https://drive.google.com/file/d/1LxP-fgf29c5ji3i1a_L_HLrJHbY5FP1x/view?usp=drive_link"
-output3 = 'COMMUNE_FRMETDROM.shp'
-gdown.download(url3, output3, quiet=False)
-cntr_com_2021 = gpd.read_file(output3)
+accident = pd.read_csv('C:/Users/hugo.razafindralambo/OneDrive - ADDACTIS GROUP/Bureau/Personnel/Datavis/baac/accident.csv')
 
 accident = accident[accident['an']==2021]
 accident = accident.drop_duplicates()
@@ -55,10 +42,10 @@ accident['grav'].replace({"1": 1, "2": 4, "3": 3, "4": 2}, inplace=True)
 list_om = ['971','972','974','976', '973', '986','988', '978', '975', '977','987']
 accident_metr = accident[~accident['dep'].isin(list_om)]
 
-
+cntr_dep = gpd.read_file("C:/Users/hugo.razafindralambo/Downloads/Geojson/departements.geojson")
 cntr_dep.rename(columns = {"code" : "dep", "nom":"Nom_dep","geometry":"geometry_dep"}, inplace = True)
 
-
+cntr_com_2021 = gpd.read_file("C:/Users/hugo.razafindralambo/Downloads/commune-frmetdrom-2021/COMMUNE_FRMETDROM.shp")
 cntr_com_2021.rename(columns = {"INSEE_COM" : "com", "NOM":"Nom_com","geometry":"geometry_com"}, inplace = True)
 
 #Nombre d'accidents par département
