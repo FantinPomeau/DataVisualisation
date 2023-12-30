@@ -1,6 +1,6 @@
 from matplotlib import pyplot as plt
 import streamlit as st
-import traitement_baac as tb
+import traitement_baacFP as tb
 import streamlit_folium
 
 st.set_page_config(page_title="Application BAAC", page_icon="🚗", layout="wide")
@@ -31,7 +31,7 @@ st.markdown(
     
     .head-data-container {
         color: #ffffff;
-        background-image: url("C:/Users/hugo.razafindralambo/OneDrive - ADDACTIS GROUP/Bureau/Personnel/Datavis/baac/injury-leave-icon-with-png-and-vector-format-for-free-unlimited-920509.png");
+    
         background-color: #0078D4;
         padding: 20px 10px;
         border-radius: 5px;
